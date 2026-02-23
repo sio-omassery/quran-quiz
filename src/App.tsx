@@ -294,7 +294,7 @@ function App() {
         {/* Background Image */}
         <div className="hero-bg absolute inset-0">
           <img
-            src="/hero_desert_moon.jpg"
+            src="hero_desert_moon.jpg"
             alt="Desert at night"
             className="w-full h-full object-cover"
           />
@@ -377,7 +377,7 @@ function App() {
             <div className="about-image lg:sticky lg:top-24">
               <div className="relative rounded-2xl overflow-hidden shadow-card">
                 <img
-                  src="/about_desert_card.jpg"
+                  src="about_desert_card.jpg"
                   alt="Desert dunes"
                   className="w-full h-[400px] lg:h-[500px] object-cover"
                 />
@@ -584,7 +584,7 @@ function App() {
         {/* Background */}
         <div className="absolute inset-0">
           <img
-            src="/quiz_background_desert.jpg"
+            src="quiz_background_desert.jpg"
             alt="Desert background"
             className="w-full h-full object-cover"
           />
