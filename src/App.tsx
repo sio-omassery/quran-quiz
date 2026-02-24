@@ -63,38 +63,33 @@ interface Quiz {
 const quizzes: Quiz[] = [
   {
     id: 1,
-    title: 'ഭാഗം 1: സൂറത്തുൽ മുംതഹിന',
+    title: 'Part 1: Surah Al-Mumtahina',
     date: '2026-02-26',
-    ramadanDay: 0, // Pre-Ramadan or early Ramadan
-    focus: ['സൂറത്തുൽ മുംതഹിന', 'ഖുർആൻ പഠനം', 'ഭാഗം 1'],
+    ramadanDay: 1,
+    focus: ['Surah Al-Mumtahina', 'Quran Study', 'Part 1'],
     questions: [
-      "വിശുദ്ധ ഖുർആനിലെ എത്രാമത്തെ അധ്യായമാണ് സൂറ അൽ മുംതഹിന?",
-      "ഈ അധ്യായത്തിന് 'അൽ മുംതഹിന' എന്ന പേര് വരാൻ കാരണമെന്ത്?",
-      "ഇമാം ഇബ്നു ഹജറൽ അസ്കലാനിയുടെ അഭിപ്രായത്തിൽ ഈ സൂറത്തിന്റെ പേര് എങ്ങനെയാണ് ഉച്ചരിക്കേണ്ടത്?",
-      "ആരെയാണ് ഈ അധ്യായത്തിൽ ആദ്യമായി ഈമാൻ പരിശോധനക്ക് വിധേയമാക്കിയത്?",
-      "'ഇംതഹന' എന്ന പദത്തിന്റെ ഭാഷാപരമായ അർത്ഥം എന്താണ്?",
-      "സൂറത്തുൽ മുംതഹിനക്ക് വേറെ ഏതൊക്കെ പേരുകളുണ്ട്?",
-      "ഈ സൂറത്ത് എവിടെ വെച്ചാണ് അവതരിച്ചത്?",
-      "സൂറത്തുൽ മുംതഹിനയിൽ ആകെ എത്ര ആയത്തുകളുണ്ട്?",
-      "ഈ സൂറത്തിലെ ആയത്തുകളുടെ പ്രത്യേകത എന്താണ്?",
-      "\"യാ അയ്യുഹല്ലദീന ആമനു\" (സത്യവിശ്വാസികളേ) എന്ന് വിളിച്ച് തുടങ്ങുന്ന ആയത്തുകൾ ഈ സൂറത്തിൽ എത്രയുണ്ട്?"
+      "Explain the context of revelation (Sabab al-Nuzul) of Surah Al-Mumtahina.",
+      "What are the key lessons taught in the first five verses of the Surah regarding friendship and enmity?",
+      "Discuss the significance of Prophet Ibrahim (AS) as an example mentioned in this Surah.",
+      "How does the Surah address the issue of family ties versus faith?",
+      "Summarize the guidelines given for interacting with non-Muslims who are not at war with believers."
     ]
   },
   {
     id: 2,
-    title: 'ഭാഗം 2: സൂറത്തുൽ മുംതഹിന',
+    title: 'Part 2: Surah Al-Mumtahina',
     date: '2026-03-06',
     ramadanDay: 6,
-    focus: ['സൂറത്തുൽ മുംതഹിന', 'ഖുർആൻ പഠനം', 'ഭാഗം 2'],
-    questions: ["Coming soon..."]
+    focus: ['Surah Al-Mumtahina', 'Quran Study', 'Part 2'],
+    questions: ["Questions will be available soon..."]
   },
   {
     id: 3,
-    title: 'ഭാഗം 3: സൂറത്തുൽ മുംതഹിന',
+    title: 'Part 3: Surah Al-Mumtahina',
     date: '2026-03-14',
     ramadanDay: 14,
-    focus: ['സൂറത്തുൽ മുംതഹിന', 'ഖുർആൻ പഠനം', 'ഭാഗം 3'],
-    questions: ["ചോദ്യങ്ങൾ ഉടൻ ലഭ്യമാകും..."]
+    focus: ['Surah Al-Mumtahina', 'Quran Study', 'Part 3'],
+    questions: ["Questions will be available soon..."]
   }
 ]
 
@@ -152,21 +147,32 @@ function App() {
   // Check quiz availability
   const checkQuizAvailability = () => {
     console.log('checkQuizAvailability called')
-    const availableQuiz = quizzes[0] // For testing, just use the first quiz
+    const now = new Date()
+    const targetQuiz = quizzes.find(q => {
+      const qDate = new Date(q.date)
+      return qDate.toDateString() === now.toDateString()
+    })
 
-    if (availableQuiz) {
-      setCurrentQuiz(availableQuiz)
-      setAnswers(new Array(availableQuiz.questions.length).fill(''))
-      setCurrentView('form')
+    if (!targetQuiz) {
+      setDialogMessage({
+        title: 'Quiz Not Available',
+        description: 'No quiz is scheduled for today. Please check the schedule for upcoming dates.'
+      })
+      setDialogOpen(true)
+      return
     }
+
+    setCurrentQuiz(targetQuiz)
+    setAnswers(new Array(targetQuiz.questions.length).fill(''))
+    setCurrentView('form')
   }
 
   // Start quiz after form
   const startQuiz = () => {
     if (!participantInfo.fullName || !participantInfo.age || !participantInfo.category || !participantInfo.gender) {
       setDialogMessage({
-        title: 'വിവരങ്ങൾ അപൂർണ്ണമാണ്',
-        description: 'ദയവായി പേര്, പ്രായം, വിഭാഗം, ലിംഗം എന്നിവ നൽകുക.'
+        title: 'Information Incomplete',
+        description: 'Please provide your name, age, category, and gender to proceed.'
       })
       setDialogOpen(true)
       return
@@ -281,7 +287,7 @@ function App() {
             onClick={checkQuizAvailability}
             className="hidden sm:flex bg-gold text-midnight hover:bg-gold-light font-medium px-6 rounded-pill"
           >
-            തുടങ്ങാം
+            Start Quiz
           </Button>
           <button
             onClick={() => setMenuOpen(!menuOpen)}
@@ -295,8 +301,8 @@ function App() {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="fixed inset-0 z-40 bg-midnight/95 backdrop-blur-lg flex flex-col items-center justify-center gap-8">
-          <a href="#about" onClick={() => setMenuOpen(false)} className="font-serif text-2xl text-cream hover:text-gold transition-colors">വിവരങ്ങൾ</a>
-          <a href="#schedule" onClick={() => setMenuOpen(false)} className="font-serif text-2xl text-cream hover:text-gold transition-colors">സമയക്രമം</a>
+          <a href="#about" onClick={() => setMenuOpen(false)} className="font-serif text-2xl text-cream hover:text-gold transition-colors">About</a>
+          <a href="#schedule" onClick={() => setMenuOpen(false)} className="font-serif text-2xl text-cream hover:text-gold transition-colors">Schedule</a>
           <Button
             onClick={() => {
               setMenuOpen(false)
@@ -304,7 +310,7 @@ function App() {
             }}
             className="bg-gold text-midnight hover:bg-gold-light font-medium px-8 py-3 rounded-pill mt-4"
           >
-            ക്വിസ് തുടങ്ങാം
+            Start Quiz
           </Button>
         </div>
       )}
@@ -329,15 +335,15 @@ function App() {
             Ramadan Reflections 2026
           </p>
           <h1 className="font-serif text-3xl sm:text-5xl lg:text-7xl xl:text-8xl text-cream leading-[1.1] sm:leading-[0.95] mb-6">
-            ഓൺലൈൻ ഖുർആൻ<br />
-            <span className="text-gold">ക്വിസ്</span> മത്സരം
+            Ramadan Reflections<br />
+            <span className="text-gold">Quiz</span> 2026
           </h1>
           <p className="text-lavender text-base lg:text-lg leading-relaxed mb-8 max-w-lg">
-            സൂറ അൽ-മുംതഹിനയെ ആസ്പദമാക്കിയുള്ള ഓൺലൈൻ ക്വിസ് മത്സരം. റമദാൻ മാസത്തെ കൂടുതൽ ഫലപ്രദമാക്കാൻ ഈ അവസരം ഉപയോഗപ്പെടുത്തുക.
+            An online quiz competition based on Surah Al-Mumtahina. Use this opportunity to make your Ramadan more productive and spiritually enriching.
           </p>
           <div className="bg-gold/10 border border-gold/20 p-4 rounded-xl mb-8 max-w-lg">
             <p className="text-gold text-sm font-sans">
-              * മത്സരം ഓമശ്ശേരി പ്രദേശത്തുക്കാർക്ക് മാത്രമായിരിക്കും. (SIO Omassery Area)
+              * The competition is exclusive to residents of SIO Omassery Area.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 items-center sm:items-start w-full sm:w-auto">
@@ -345,7 +351,7 @@ function App() {
               onClick={checkQuizAvailability}
               className="btn-gold w-full sm:w-auto px-8 py-6 rounded-pill text-base font-medium"
             >
-              ക്വിസ് തുടങ്ങാം
+              Start Quiz
             </Button>
             <a
               href="#about"
@@ -368,13 +374,13 @@ function App() {
               </h2>
               <div className="space-y-6">
                 <p className="about-text text-lavender leading-relaxed">
-                  വിശുദ്ധ റമദാനിന്റെ പുണ്യ ദിനങ്ങളിൽ അല്ലാഹുവിന്റെ വചനങ്ങളെ അടുത്തറിയാൻ ഒരു സുവർണ്ണാവസരം. സൂറ അൽ-മുംതഹിനയെ ആസ്പദമാക്കിയുള്ള ക്വിസ് മത്സരം.
+                  A golden opportunity to get closer to the words of Allah during the holy days of Ramadan. This quiz competition is based on Surah Al-Mumtahina.
                 </p>
                 <p className="about-text text-lavender leading-relaxed">
-                  സ്ത്രീ വിഭാഗവും പുരുഷ വിഭാഗവും പ്രത്യേകം മത്സരമായി ഉണ്ടായിരിക്കും. ഓരോ കാറ്റഗറിയിലും സ്ത്രീ വിഭാഗത്തിൽ നിന്ന് 2 പേർക്കും പുരുഷ വിഭാഗത്തിൽ നിന്ന് 2 പേർക്കും സമ്മാനങ്ങൾ ലഭിക്കും.
+                  There will be separate competitions for men and women. In each category, two prizes will be awarded for men and two for women.
                 </p>
                 <p className="about-text text-lavender leading-relaxed">
-                  ആകെ 3 കാറ്റഗറികളിലായി 12 പേർക്ക് സമ്മാനങ്ങൾ ഉണ്ടായിരിക്കും. ഈ ക്വിസിന് ഉത്തരങ്ങൾ നൽകാൻ ഒരു ദിവസത്തെ സമയം ഉണ്ടാവും.
+                  A total of 12 winners across 3 categories will receive prizes. Participants will have one day to submit their answers for each quiz.
                 </p>
               </div>
 
@@ -471,7 +477,7 @@ function App() {
             <Moon className="w-5 h-5 text-gold" />
             <span className="font-serif text-lg text-cream">Ramadan Reflections 2026</span>
           </div>
-          <p className="text-lavender text-sm">ഓൺലൈൻ ഖുർആൻ ക്വിസ് മത്സരം</p>
+          <p className="text-lavender text-sm">Online Quran Quiz Competition</p>
           <p className="font-mono text-xs text-lavender/60">SIO OMASSERY AREA</p>
         </div>
       </footer>
@@ -489,7 +495,7 @@ function App() {
             onClick={() => setDialogOpen(false)}
             className="bg-gold text-midnight hover:bg-gold-light mt-4"
           >
-            ശരി
+            Understood
           </Button>
         </DialogContent>
       </Dialog>
@@ -507,7 +513,7 @@ function App() {
           onClick={() => setCurrentView('landing')}
           className="absolute -top-16 left-0 flex items-center gap-2 text-lavender hover:text-gold transition-colors"
         >
-          <ChevronLeft className="w-5 h-5" /> ഹോം പേജിലേക്ക്
+          <ChevronLeft className="w-5 h-5" /> Back to Home
         </button>
 
         <div className="bg-midnight-light border border-cream/10 rounded-2xl p-8 lg:p-10 shadow-card">
@@ -515,47 +521,47 @@ function App() {
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gold/10 flex items-center justify-center">
               <Users className="w-7 h-7 text-gold" />
             </div>
-            <h2 className="font-serif text-2xl sm:text-3xl text-cream mb-2">മത്സരയിതാവിന്റെ വിവരങ്ങൾ</h2>
+            <h2 className="font-serif text-2xl sm:text-3xl text-cream mb-2">Participant Information</h2>
             <p className="text-lavender text-xs sm:text-sm">
-              {currentQuiz && `ക്വിസ്: ${currentQuiz.title}`}
+              {currentQuiz && `Quiz: ${currentQuiz.title}`}
             </p>
           </div>
 
           <div className="space-y-5">
             <div>
-              <Label className="text-cream mb-2 block">പൂർണ്ണമായ പേര് <span className="text-gold">*</span></Label>
+              <Label className="text-cream mb-2 block">Full Name <span className="text-gold">*</span></Label>
               <Input
                 value={participantInfo.fullName}
                 onChange={(e) => setParticipantInfo({ ...participantInfo, fullName: e.target.value })}
-                placeholder="നിങ്ങളുടെ പേര് നൽകുക"
+                placeholder="Enter your full name"
                 className="bg-midnight border-cream/10 text-cream placeholder:text-lavender/50 focus:border-gold focus:ring-gold/20"
               />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <Label className="text-cream mb-2 block">പ്രായം <span className="text-gold">*</span></Label>
+                <Label className="text-cream mb-2 block">Age <span className="text-gold">*</span></Label>
                 <Input
                   type="number"
                   value={participantInfo.age}
                   onChange={(e) => setParticipantInfo({ ...participantInfo, age: e.target.value })}
-                  placeholder="പ്രായം"
+                  placeholder="Age"
                   className="bg-midnight border-cream/10 text-cream placeholder:text-lavender/50 focus:border-gold focus:ring-gold/20"
                 />
               </div>
               <div>
-                <Label className="text-cream mb-2 block">വിഭാഗം <span className="text-gold">*</span></Label>
+                <Label className="text-cream mb-2 block">Category <span className="text-gold">*</span></Label>
                 <Select
                   value={participantInfo.category}
                   onValueChange={(value) => setParticipantInfo({ ...participantInfo, category: value as AgeCategory })}
                 >
                   <SelectTrigger className="bg-midnight border-cream/10 text-cream focus:ring-gold/20">
-                    <SelectValue placeholder="വിഭാഗം" />
+                    <SelectValue placeholder="Select Category" />
                   </SelectTrigger>
                   <SelectContent className="bg-midnight-light border-cream/10 text-white">
-                    <SelectItem value="cat1">Category 1 (30 വയസ് വരെ)</SelectItem>
-                    <SelectItem value="cat2">Category 2 (50 വയസ് വരെ)</SelectItem>
-                    <SelectItem value="cat3">Category 3 (50 വയസിന് മുകളിൽ)</SelectItem>
+                    <SelectItem value="cat1">Category 1 (Up to 30 years)</SelectItem>
+                    <SelectItem value="cat2">Category 2 (Up to 50 years)</SelectItem>
+                    <SelectItem value="cat3">Category 3 (Above 50 years)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -563,38 +569,38 @@ function App() {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="col-span-2">
-                <Label className="text-cream mb-2 block">ലിംഗം <span className="text-gold">*</span></Label>
+                <Label className="text-cream mb-2 block">Gender <span className="text-gold">*</span></Label>
                 <Select
                   value={participantInfo.gender}
                   onValueChange={(value) => setParticipantInfo({ ...participantInfo, gender: value as Gender })}
                 >
                   <SelectTrigger className="bg-midnight border-cream/10 text-cream focus:ring-gold/20">
-                    <SelectValue placeholder="ലിംഗം തിരഞ്ഞെടുക്കുക" />
+                    <SelectValue placeholder="Select Gender" />
                   </SelectTrigger>
-                  <SelectContent className="bg-midnight-light border-cream/10">
-                    <SelectItem value="male" className="text-cream focus:bg-gold/20">പുരുഷൻ (Male)</SelectItem>
-                    <SelectItem value="female" className="text-cream focus:bg-gold/20">സ്ത്രീ (Female)</SelectItem>
+                  <SelectContent className="bg-midnight-light border-cream/10 text-white">
+                    <SelectItem value="male">Male</SelectItem>
+                    <SelectItem value="female">Female</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
 
             <div>
-              <Label className="text-cream mb-2 block">സ്കൂൾ / മദ്രസ / മഹല്ല് <span className="text-lavender/60">(optional)</span></Label>
+              <Label className="text-cream mb-2 block">School / Madrasa / Mahallu <span className="text-lavender/60">(optional)</span></Label>
               <Input
                 value={participantInfo.schoolOrMosque}
                 onChange={(e) => setParticipantInfo({ ...participantInfo, schoolOrMosque: e.target.value })}
-                placeholder="പേര് നൽകുക"
+                placeholder="Enter name"
                 className="bg-midnight border-cream/10 text-cream placeholder:text-lavender/50 focus:border-gold focus:ring-gold/20"
               />
             </div>
 
             <div>
-              <Label className="text-cream mb-2 block">ഫോൺ നമ്പർ <span className="text-lavender/60">(optional)</span></Label>
+              <Label className="text-cream mb-2 block">Phone Number <span className="text-lavender/60">(optional)</span></Label>
               <Input
                 value={participantInfo.contactNumber}
                 onChange={(e) => setParticipantInfo({ ...participantInfo, contactNumber: e.target.value })}
-                placeholder="ഫോൺ നമ്പർ നൽകുക"
+                placeholder="Enter contact number"
                 className="bg-midnight border-cream/10 text-cream placeholder:text-lavender/50 focus:border-gold focus:ring-gold/20"
               />
             </div>
@@ -603,7 +609,7 @@ function App() {
               onClick={startQuiz}
               className="w-full btn-gold py-4 sm:py-6 rounded-pill text-base font-medium mt-4 sm:mt-6"
             >
-              തുടങ്ങാം
+              Start Quiz
             </Button>
           </div>
         </div>
@@ -664,7 +670,7 @@ function App() {
             {/* Question Number */}
             <div className="flex items-center gap-3 mb-6">
               <span className="font-mono text-sm tracking-[0.12em] text-gold uppercase">
-                ചോദ്യം {currentQuestionIndex + 1} / {currentQuiz.questions.length}
+                Question {currentQuestionIndex + 1} / {currentQuiz.questions.length}
               </span>
             </div>
 
@@ -681,13 +687,13 @@ function App() {
                 newAnswers[currentQuestionIndex] = e.target.value
                 setAnswers(newAnswers)
               }}
-              placeholder="നിങ്ങളുടെ ഉത്തരം ഇവിടെ എഴുതുക..."
+              placeholder="Write your answer here..."
               className="min-h-[200px] bg-midnight border-cream/10 text-cream placeholder:text-lavender/50 focus:border-gold focus:ring-gold/20 textarea-glow ambient-glow resize-none"
             />
 
             {/* Word Count */}
             <p className="text-right text-lavender/60 text-sm mt-2">
-              {answers[currentQuestionIndex]?.split(/\s+/).filter(w => w.length > 0).length || 0} വാക്കുകൾ
+              {answers[currentQuestionIndex]?.split(/\s+/).filter(w => w.length > 0).length || 0} words
             </p>
           </div>
         </div>
@@ -702,11 +708,11 @@ function App() {
               : 'text-cream hover:text-gold hover:bg-cream/5'
               }`}
           >
-            <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" /> മുൻപത്തെ ചോദ്യം
+            <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" /> Previous
           </button>
 
           <span className="font-mono text-[10px] sm:text-sm text-lavender hidden md:block">
-            ചോദ്യം {currentQuestionIndex + 1} / {currentQuiz.questions.length}
+            Question {currentQuestionIndex + 1} / {currentQuiz.questions.length}
           </span>
 
           {isLastQuestion ? (
@@ -714,14 +720,14 @@ function App() {
               onClick={submitQuiz}
               className="btn-gold px-6 sm:px-8 py-3 rounded-pill flex items-center gap-2 text-sm sm:text-base"
             >
-              സബ്മിറ്റ് ചെയ്യുക <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5" />
+              Submit Quiz <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5" />
             </Button>
           ) : (
             <button
               onClick={() => setCurrentQuestionIndex(prev => prev + 1)}
               className="flex items-center gap-2 px-6 sm:px-8 py-3 rounded-pill bg-gold text-midnight font-medium hover:bg-gold-light transition-all text-sm sm:text-base"
             >
-              അടുത്തത് <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+              Next <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
           )}
         </div>
@@ -767,15 +773,15 @@ function App() {
         </div>
 
         <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-cream mb-6">
-          നിങ്ങളുടെ ഉത്തരങ്ങൾ <span className="text-gold">സമർപ്പിച്ചു.</span>
+          Your answers have been <span className="text-gold">submitted.</span>
         </h1>
 
         <p className="text-lavender text-base sm:text-lg leading-relaxed mb-4">
-          ഈ ക്വിസ് മത്സരത്തിൽ പങ്കെടുത്തതിന് നന്ദി, {participantInfo.fullName}.
+          Thank you for participating in the quiz, {participantInfo.fullName}.
         </p>
 
         <p className="text-lavender/80 mb-10 text-sm sm:text-base">
-          ഈ പുണ്യ മാസം നിങ്ങളുടെ ആത്മീയ യാത്രയിൽ വെളിച്ചവും വളർച്ചയും നൽകട്ടെ.
+          May this blessed month bring clarity and growth to your spiritual journey.
         </p>
 
         <div className="flex flex-col gap-4 justify-center w-full max-w-sm mx-auto">
@@ -783,7 +789,7 @@ function App() {
             onClick={returnHome}
             className="btn-gold px-8 py-5 sm:py-6 rounded-pill w-full"
           >
-            ഹോം പേജിലേക്ക്
+            Return Home
           </Button>
           <a
             href="https://chat.whatsapp.com/FDHO2iy5x898gnX3YNx5vj"
@@ -791,7 +797,7 @@ function App() {
             rel="noopener noreferrer"
             className="bg-[#25D366] text-white hover:bg-[#128C7E] px-8 py-5 sm:py-6 rounded-pill flex items-center justify-center gap-2 font-medium w-full text-sm sm:text-base"
           >
-            വാട്സ്ആപ്പ് ഗ്രൂപ്പിൽ ചേരുക
+            Join WhatsApp Group
           </a>
         </div>
 
