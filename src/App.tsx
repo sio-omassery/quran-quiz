@@ -39,11 +39,13 @@ gsap.registerPlugin(ScrollTrigger)
 
 // Types
 type View = 'landing' | 'form' | 'quiz' | 'confirmation'
-type AgeCategory = 'junior' | 'intermediate' | 'senior'
+type AgeCategory = 'cat1' | 'cat2' | 'cat3'
+type Gender = 'male' | 'female'
 
 interface ParticipantInfo {
   fullName: string
   age: string
+  gender: Gender | ''
   category: AgeCategory | ''
   schoolOrMosque: string
   contactNumber: string
@@ -61,10 +63,10 @@ interface Quiz {
 const quizzes: Quiz[] = [
   {
     id: 1,
-    title: 'സൂറത്തുൽ മുംതഹിന',
-    date: '2026-03-05',
-    ramadanDay: 5,
-    focus: ['സൂറത്തുൽ മുംതഹിന', 'ഖുർആൻ പഠനം', 'ചരിത്രം'],
+    title: 'ഭാഗം 1: സൂറത്തുൽ മുംതഹിന',
+    date: '2026-02-26',
+    ramadanDay: 0, // Pre-Ramadan or early Ramadan
+    focus: ['സൂറത്തുൽ മുംതഹിന', 'ഖുർആൻ പഠനം', 'ഭാഗം 1'],
     questions: [
       "വിശുദ്ധ ഖുർആനിലെ എത്രാമത്തെ അധ്യായമാണ് സൂറ അൽ മുംതഹിന?",
       "ഈ അധ്യായത്തിന് 'അൽ മുംതഹിന' എന്ന പേര് വരാൻ കാരണമെന്ത്?",
@@ -77,6 +79,22 @@ const quizzes: Quiz[] = [
       "ഈ സൂറത്തിലെ ആയത്തുകളുടെ പ്രത്യേകത എന്താണ്?",
       "\"യാ അയ്യുഹല്ലദീന ആമനു\" (സത്യവിശ്വാസികളേ) എന്ന് വിളിച്ച് തുടങ്ങുന്ന ആയത്തുകൾ ഈ സൂറത്തിൽ എത്രയുണ്ട്?"
     ]
+  },
+  {
+    id: 2,
+    title: 'ഭാഗം 2: സൂറത്തുൽ മുംതഹിന',
+    date: '2026-03-06',
+    ramadanDay: 6,
+    focus: ['സൂറത്തുൽ മുംതഹിന', 'ഖുർആൻ പഠനം', 'ഭാഗം 2'],
+    questions: ["Coming soon..."]
+  },
+  {
+    id: 3,
+    title: 'ഭാഗം 3: സൂറത്തുൽ മുംതഹിന',
+    date: '2026-03-14',
+    ramadanDay: 14,
+    focus: ['സൂറത്തുൽ മുംതഹിന', 'ഖുർആൻ പഠനം', 'ഭാഗം 3'],
+    questions: ["Coming soon..."]
   }
 ]
 
@@ -89,6 +107,7 @@ function App() {
   const [participantInfo, setParticipantInfo] = useState<ParticipantInfo>({
     fullName: '',
     age: '',
+    gender: '',
     category: '',
     schoolOrMosque: '',
     contactNumber: ''
@@ -144,10 +163,10 @@ function App() {
 
   // Start quiz after form
   const startQuiz = () => {
-    if (!participantInfo.fullName || !participantInfo.age || !participantInfo.category) {
+    if (!participantInfo.fullName || !participantInfo.age || !participantInfo.category || !participantInfo.gender) {
       setDialogMessage({
-        title: 'Missing Information',
-        description: 'Please fill in all required fields (Full Name, Age, and Category).'
+        title: 'വിവരങ്ങൾ അപൂർണ്ണമാണ്',
+        description: 'ദയവായി പേര്, പ്രായം, വിഭാഗം, ലിംഗം എന്നിവ നൽകുക.'
       })
       setDialogOpen(true)
       return
@@ -172,6 +191,7 @@ function App() {
     setParticipantInfo({
       fullName: '',
       age: '',
+      gender: '',
       category: '',
       schoolOrMosque: '',
       contactNumber: ''
@@ -309,12 +329,17 @@ function App() {
             Ramadan Reflections 2026
           </p>
           <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl xl:text-8xl text-cream leading-[0.95] mb-6">
-            Reflect.<br />
-            <span className="text-gold">Write.</span> Rise.
+            ഓൺലൈൻ ഖുർആൻ<br />
+            <span className="text-gold">ക്വിസ്</span> മത്സരം
           </h1>
           <p className="text-lavender text-base lg:text-lg leading-relaxed mb-8 max-w-lg">
-            A three-round journey through Qur'an, fasting, and purpose—answered in your own words.
+            സൂറ അൽ-മുംതഹിനയെ ആസ്പദമാക്കിയുള്ള ഓൺലൈൻ ക്വിസ് മത്സരം. റമദാൻ മാസത്തെ കൂടുതൽ ഫലപ്രദമാക്കാൻ ഈ അവസരം ഉപയോഗപ്പെടുത്തുക.
           </p>
+          <div className="bg-gold/10 border border-gold/20 p-4 rounded-xl mb-8 max-w-lg">
+            <p className="text-gold text-sm font-sans">
+              * മത്സരം ഓമശ്ശേരി പ്രദേശത്തുക്കാർക്ക് മാത്രമായിരിക്കും. (SIO Omassery Area)
+            </p>
+          </div>
           <div className="flex flex-col sm:flex-row gap-4">
             <Button
               onClick={checkQuizAvailability}
@@ -343,16 +368,13 @@ function App() {
               </h2>
               <div className="space-y-6">
                 <p className="about-text text-lavender leading-relaxed">
-                  Ramadan Reflections is a written quiz—no multiple choice. You'll answer in paragraphs,
-                  expressing your understanding, reflections, and personal connection to Islamic teachings.
+                  വിശുദ്ധ റമദാനിന്റെ പുണ്യ ദിനങ്ങളിൽ അല്ലാഹുവിന്റെ വചനങ്ങളെ അടുത്തറിയാൻ ഒരു സുവർണ്ണാവസരം. സൂറ അൽ-മുംതഹിനയെ ആസ്പദമാക്കിയുള്ള ക്വിസ് മത്സരം.
                 </p>
                 <p className="about-text text-lavender leading-relaxed">
-                  Topics span Qur'an, the fiqh of fasting, Islamic history, and the spiritual lessons
-                  of the month. Each question invites you to think deeply and articulate your thoughts.
+                  സ്ത്രീ വിഭാഗവും പുരുഷ വിഭാഗവും പ്രത്യേകം മത്സരമായി ഉണ്ടായിരിക്കും. ഓരോ കാറ്റഗറിയിലും സ്ത്രീ വിഭാഗത്തിൽ നിന്ന് 2 പേർക്കും പുരുഷ വിഭാഗത്തിൽ നിന്ന് 2 പേർക്കും സമ്മാനങ്ങൾ ലഭിക്കും.
                 </p>
                 <p className="about-text text-lavender leading-relaxed">
-                  Clarity, structure, and depth matter more than length. We value thoughtful responses
-                  that demonstrate genuine understanding and personal growth.
+                  ആകെ 3 കാറ്റഗറികളിലായി 12 പേർക്ക് സമ്മാനങ്ങൾ ഉണ്ടായിരിക്കും. ഈ ക്വിസിന് ഉത്തരങ്ങൾ നൽകാൻ ഒരു ദിവസത്തെ സമയം ഉണ്ടാവും.
                 </p>
               </div>
 
@@ -419,7 +441,7 @@ function App() {
                     <div className={`inline-flex items-center gap-2 mb-3 ${index % 2 === 0 ? 'lg:flex-row-reverse' : ''}`}>
                       <Calendar className="w-4 h-4 text-gold" />
                       <span className="font-mono text-sm tracking-[0.12em] text-gold uppercase">
-                        {quiz.ramadanDay} Ramadan
+                        {quiz.date}
                       </span>
                     </div>
                     <h3 className="font-serif text-2xl text-cream mb-3">{quiz.title}</h3>
@@ -512,7 +534,7 @@ function App() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label className="text-cream mb-2 block">Age <span className="text-gold">*</span></Label>
+                <Label className="text-cream mb-2 block">പ്രായം <span className="text-gold">*</span></Label>
                 <Input
                   type="number"
                   value={participantInfo.age}
@@ -522,18 +544,36 @@ function App() {
                 />
               </div>
               <div>
-                <Label className="text-cream mb-2 block">Category <span className="text-gold">*</span></Label>
+                <Label className="text-cream mb-2 block">വിഭാഗം <span className="text-gold">*</span></Label>
                 <Select
                   value={participantInfo.category}
                   onValueChange={(value) => setParticipantInfo({ ...participantInfo, category: value as AgeCategory })}
                 >
                   <SelectTrigger className="bg-midnight border-cream/10 text-cream focus:ring-gold/20">
-                    <SelectValue placeholder="Select" />
+                    <SelectValue placeholder="വിഭാഗം" />
                   </SelectTrigger>
                   <SelectContent className="bg-midnight-light border-cream/10">
-                    <SelectItem value="junior" className="text-cream focus:bg-gold/20">Junior (Under 14)</SelectItem>
-                    <SelectItem value="intermediate" className="text-cream focus:bg-gold/20">Intermediate (15-17)</SelectItem>
-                    <SelectItem value="senior" className="text-cream focus:bg-gold/20">Senior (18+)</SelectItem>
+                    <SelectItem value="cat1" className="text-cream focus:bg-gold/20">Category 1 (30 വയസ് വരെ)</SelectItem>
+                    <SelectItem value="cat2" className="text-cream focus:bg-gold/20">Category 2 (50 വയസ് വരെ)</SelectItem>
+                    <SelectItem value="cat3" className="text-cream focus:bg-gold/20">Category 3 (50 വയസിന് മുകളിൽ)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="col-span-2">
+                <Label className="text-cream mb-2 block">ലിംഗം <span className="text-gold">*</span></Label>
+                <Select
+                  value={participantInfo.gender}
+                  onValueChange={(value) => setParticipantInfo({ ...participantInfo, gender: value as Gender })}
+                >
+                  <SelectTrigger className="bg-midnight border-cream/10 text-cream focus:ring-gold/20">
+                    <SelectValue placeholder="ലിംഗം തിരഞ്ഞെടുക്കുക" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-midnight-light border-cream/10">
+                    <SelectItem value="male" className="text-cream focus:bg-gold/20">പുരുഷൻ (Male)</SelectItem>
+                    <SelectItem value="female" className="text-cream focus:bg-gold/20">സ്ത്രീ (Female)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -745,6 +785,14 @@ function App() {
           >
             Return Home
           </Button>
+          <a
+            href="https://chat.whatsapp.com/FDHO2iy5x898gnX3YNx5vj"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-[#25D366] text-white hover:bg-[#128C7E] px-8 py-6 rounded-pill flex items-center justify-center gap-2 font-medium"
+          >
+            Join WhatsApp Group
+          </a>
         </div>
 
         <p className="font-mono text-xs tracking-[0.12em] text-lavender/50 uppercase mt-12">
