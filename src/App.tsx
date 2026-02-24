@@ -94,7 +94,7 @@ const quizzes: Quiz[] = [
     date: '2026-03-14',
     ramadanDay: 14,
     focus: ['സൂറത്തുൽ മുംതഹിന', 'ഖുർആൻ പഠനം', 'ഭാഗം 3'],
-    questions: ["Coming soon..."]
+    questions: ["ചോദ്യങ്ങൾ ഉടൻ ലഭ്യമാകും..."]
   }
 ]
 
@@ -281,7 +281,7 @@ function App() {
             onClick={checkQuizAvailability}
             className="hidden sm:flex bg-gold text-midnight hover:bg-gold-light font-medium px-6 rounded-pill"
           >
-            Start Quiz
+            തുടങ്ങാം
           </Button>
           <button
             onClick={() => setMenuOpen(!menuOpen)}
@@ -295,8 +295,8 @@ function App() {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="fixed inset-0 z-40 bg-midnight/95 backdrop-blur-lg flex flex-col items-center justify-center gap-8">
-          <a href="#about" onClick={() => setMenuOpen(false)} className="font-serif text-2xl text-cream hover:text-gold transition-colors">About</a>
-          <a href="#schedule" onClick={() => setMenuOpen(false)} className="font-serif text-2xl text-cream hover:text-gold transition-colors">Schedule</a>
+          <a href="#about" onClick={() => setMenuOpen(false)} className="font-serif text-2xl text-cream hover:text-gold transition-colors">വിവരങ്ങൾ</a>
+          <a href="#schedule" onClick={() => setMenuOpen(false)} className="font-serif text-2xl text-cream hover:text-gold transition-colors">സമയക്രമം</a>
           <Button
             onClick={() => {
               setMenuOpen(false)
@@ -304,7 +304,7 @@ function App() {
             }}
             className="bg-gold text-midnight hover:bg-gold-light font-medium px-8 py-3 rounded-pill mt-4"
           >
-            Start Quiz
+            ക്വിസ് തുടങ്ങാം
           </Button>
         </div>
       )}
@@ -328,7 +328,7 @@ function App() {
           <p className="font-mono text-xs tracking-[0.15em] text-lavender uppercase mb-4">
             Ramadan Reflections 2026
           </p>
-          <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl xl:text-8xl text-cream leading-[0.95] mb-6">
+          <h1 className="font-serif text-3xl sm:text-5xl lg:text-7xl xl:text-8xl text-cream leading-[1.1] sm:leading-[0.95] mb-6">
             ഓൺലൈൻ ഖുർആൻ<br />
             <span className="text-gold">ക്വിസ്</span> മത്സരം
           </h1>
@@ -340,16 +340,16 @@ function App() {
               * മത്സരം ഓമശ്ശേരി പ്രദേശത്തുക്കാർക്ക് മാത്രമായിരിക്കും. (SIO Omassery Area)
             </p>
           </div>
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col sm:flex-row gap-4 items-center sm:items-start w-full sm:w-auto">
             <Button
               onClick={checkQuizAvailability}
-              className="btn-gold px-8 py-6 rounded-pill text-base font-medium"
+              className="btn-gold w-full sm:w-auto px-8 py-6 rounded-pill text-base font-medium"
             >
-              Start Quiz
+              ക്വിസ് തുടങ്ങാം
             </Button>
             <a
               href="#about"
-              className="px-8 py-6 text-cream hover:text-gold transition-colors text-base font-medium flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-8 py-3 sm:py-6 text-cream hover:text-gold transition-colors text-base font-medium flex items-center justify-center gap-2"
             >
               Read the guidelines <ChevronRight className="w-4 h-4" />
             </a>
@@ -358,12 +358,12 @@ function App() {
       </section>
 
       {/* About Section */}
-      <section id="about" ref={aboutRef} className="relative py-24 lg:py-32 px-6 lg:px-0 bg-midnight">
+      <section id="about" ref={aboutRef} className="relative py-16 sm:py-24 lg:py-32 px-6 lg:px-0 bg-midnight">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             {/* Text Content */}
             <div className="lg:pl-[10vw]">
-              <h2 className="about-title font-serif text-4xl lg:text-5xl text-cream mb-8">
+              <h2 className="about-title font-serif text-3xl sm:text-4xl lg:text-5xl text-cream mb-6 sm:mb-8">
                 About the <span className="text-gold">Competition</span>
               </h2>
               <div className="space-y-6">
@@ -432,22 +432,22 @@ function App() {
             {/* Quiz Cards */}
             <div className="space-y-12">
               {quizzes.map((quiz, index) => (
-                <div key={quiz.id} className={`quiz-card relative flex ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-start gap-8`}>
+                <div key={quiz.id} className={`quiz-card relative flex ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-start gap-4 lg:gap-8`}>
                   {/* Dot */}
-                  <div className="absolute left-4 lg:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-gold shadow-glow z-10" />
+                  <div className="absolute left-2 lg:left-1/2 -translate-x-1/2 w-3 h-3 lg:w-4 lg:h-4 rounded-full bg-gold shadow-glow z-10 top-1.5" />
 
                   {/* Content */}
-                  <div className={`ml-12 lg:ml-0 lg:w-5/12 ${index % 2 === 0 ? 'lg:text-right lg:pr-12' : 'lg:pl-12'}`}>
-                    <div className={`inline-flex items-center gap-2 mb-3 ${index % 2 === 0 ? 'lg:flex-row-reverse' : ''}`}>
-                      <Calendar className="w-4 h-4 text-gold" />
-                      <span className="font-mono text-sm tracking-[0.12em] text-gold uppercase">
+                  <div className={`ml-8 lg:ml-0 lg:w-5/12 ${index % 2 === 0 ? 'lg:text-right lg:pr-12' : 'lg:pl-12'}`}>
+                    <div className={`flex items-center gap-2 mb-2 ${index % 2 === 0 ? 'lg:flex-row-reverse' : ''}`}>
+                      <Calendar className="w-3 h-3 text-gold" />
+                      <span className="font-mono text-xs tracking-[0.12em] text-gold uppercase">
                         {quiz.date}
                       </span>
                     </div>
-                    <h3 className="font-serif text-2xl text-cream mb-3">{quiz.title}</h3>
+                    <h3 className="font-serif text-xl sm:text-2xl text-cream mb-2">{quiz.title}</h3>
                     <div className={`flex flex-wrap gap-2 ${index % 2 === 0 ? 'lg:justify-end' : ''}`}>
                       {quiz.focus.map((item, i) => (
-                        <span key={i} className="px-3 py-1 bg-midnight-light border border-cream/10 rounded-full text-xs text-lavender">
+                        <span key={i} className="px-2 py-0.5 bg-midnight-light border border-cream/10 rounded-full text-[10px] sm:text-xs text-lavender">
                           {item}
                         </span>
                       ))}
@@ -471,8 +471,8 @@ function App() {
             <Moon className="w-5 h-5 text-gold" />
             <span className="font-serif text-lg text-cream">Ramadan Reflections 2026</span>
           </div>
-          <p className="text-lavender text-sm">Reflect. Write. Rise.</p>
-          <p className="font-mono text-xs text-lavender/60">Made with faith and purpose</p>
+          <p className="text-lavender text-sm">ഓൺലൈൻ ഖുർആൻ ക്വിസ് മത്സരം</p>
+          <p className="font-mono text-xs text-lavender/60">SIO OMASSERY AREA</p>
         </div>
       </footer>
 
@@ -489,7 +489,7 @@ function App() {
             onClick={() => setDialogOpen(false)}
             className="bg-gold text-midnight hover:bg-gold-light mt-4"
           >
-            Understood
+            ശരി
           </Button>
         </DialogContent>
       </Dialog>
@@ -507,7 +507,7 @@ function App() {
           onClick={() => setCurrentView('landing')}
           className="absolute -top-16 left-0 flex items-center gap-2 text-lavender hover:text-gold transition-colors"
         >
-          <ChevronLeft className="w-5 h-5" /> Back to Home
+          <ChevronLeft className="w-5 h-5" /> ഹോം പേജിലേക്ക്
         </button>
 
         <div className="bg-midnight-light border border-cream/10 rounded-2xl p-8 lg:p-10 shadow-card">
@@ -515,31 +515,31 @@ function App() {
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gold/10 flex items-center justify-center">
               <Users className="w-7 h-7 text-gold" />
             </div>
-            <h2 className="font-serif text-3xl text-cream mb-2">Participant Information</h2>
-            <p className="text-lavender text-sm">
-              {currentQuiz && `Quiz: ${currentQuiz.title}`}
+            <h2 className="font-serif text-2xl sm:text-3xl text-cream mb-2">മത്സരയിതാവിന്റെ വിവരങ്ങൾ</h2>
+            <p className="text-lavender text-xs sm:text-sm">
+              {currentQuiz && `ക്വിസ്: ${currentQuiz.title}`}
             </p>
           </div>
 
           <div className="space-y-5">
             <div>
-              <Label className="text-cream mb-2 block">Full Name <span className="text-gold">*</span></Label>
+              <Label className="text-cream mb-2 block">പൂർണ്ണമായ പേര് <span className="text-gold">*</span></Label>
               <Input
                 value={participantInfo.fullName}
                 onChange={(e) => setParticipantInfo({ ...participantInfo, fullName: e.target.value })}
-                placeholder="Enter your full name"
+                placeholder="നിങ്ങളുടെ പേര് നൽകുക"
                 className="bg-midnight border-cream/10 text-cream placeholder:text-lavender/50 focus:border-gold focus:ring-gold/20"
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <Label className="text-cream mb-2 block">പ്രായം <span className="text-gold">*</span></Label>
                 <Input
                   type="number"
                   value={participantInfo.age}
                   onChange={(e) => setParticipantInfo({ ...participantInfo, age: e.target.value })}
-                  placeholder="Age"
+                  placeholder="പ്രായം"
                   className="bg-midnight border-cream/10 text-cream placeholder:text-lavender/50 focus:border-gold focus:ring-gold/20"
                 />
               </div>
@@ -552,10 +552,10 @@ function App() {
                   <SelectTrigger className="bg-midnight border-cream/10 text-cream focus:ring-gold/20">
                     <SelectValue placeholder="വിഭാഗം" />
                   </SelectTrigger>
-                  <SelectContent className="bg-midnight-light border-cream/10">
-                    <SelectItem value="cat1" className="text-cream focus:bg-gold/20">Category 1 (30 വയസ് വരെ)</SelectItem>
-                    <SelectItem value="cat2" className="text-cream focus:bg-gold/20">Category 2 (50 വയസ് വരെ)</SelectItem>
-                    <SelectItem value="cat3" className="text-cream focus:bg-gold/20">Category 3 (50 വയസിന് മുകളിൽ)</SelectItem>
+                  <SelectContent className="bg-midnight-light border-cream/10 text-white">
+                    <SelectItem value="cat1">Category 1 (30 വയസ് വരെ)</SelectItem>
+                    <SelectItem value="cat2">Category 2 (50 വയസ് വരെ)</SelectItem>
+                    <SelectItem value="cat3">Category 3 (50 വയസിന് മുകളിൽ)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -580,30 +580,30 @@ function App() {
             </div>
 
             <div>
-              <Label className="text-cream mb-2 block">School / Mosque Name <span className="text-lavender/60">(optional)</span></Label>
+              <Label className="text-cream mb-2 block">സ്കൂൾ / മദ്രസ / മഹല്ല് <span className="text-lavender/60">(optional)</span></Label>
               <Input
                 value={participantInfo.schoolOrMosque}
                 onChange={(e) => setParticipantInfo({ ...participantInfo, schoolOrMosque: e.target.value })}
-                placeholder="Enter school or mosque name"
+                placeholder="പേര് നൽകുക"
                 className="bg-midnight border-cream/10 text-cream placeholder:text-lavender/50 focus:border-gold focus:ring-gold/20"
               />
             </div>
 
             <div>
-              <Label className="text-cream mb-2 block">Contact Number <span className="text-lavender/60">(optional)</span></Label>
+              <Label className="text-cream mb-2 block">ഫോൺ നമ്പർ <span className="text-lavender/60">(optional)</span></Label>
               <Input
                 value={participantInfo.contactNumber}
                 onChange={(e) => setParticipantInfo({ ...participantInfo, contactNumber: e.target.value })}
-                placeholder="Enter contact number"
+                placeholder="ഫോൺ നമ്പർ നൽകുക"
                 className="bg-midnight border-cream/10 text-cream placeholder:text-lavender/50 focus:border-gold focus:ring-gold/20"
               />
             </div>
 
             <Button
               onClick={startQuiz}
-              className="w-full btn-gold py-6 rounded-pill text-base font-medium mt-6"
+              className="w-full btn-gold py-4 sm:py-6 rounded-pill text-base font-medium mt-4 sm:mt-6"
             >
-              Begin Quiz
+              തുടങ്ങാം
             </Button>
           </div>
         </div>
@@ -636,9 +636,9 @@ function App() {
         <div className="noise-overlay" />
 
         {/* Top HUD */}
-        <div className="relative z-10 px-6 lg:px-12 py-6 flex justify-between items-center">
-          <div>
-            <p className="font-mono text-xs tracking-[0.12em] text-gold uppercase">{currentQuiz.title}</p>
+        <div className="relative z-10 px-4 sm:px-12 py-4 flex justify-between items-center bg-midnight/50 backdrop-blur-md">
+          <div className="max-w-[150px] sm:max-w-none">
+            <p className="font-mono text-[10px] sm:text-xs tracking-[0.12em] text-gold uppercase truncate">{currentQuiz.title}</p>
           </div>
 
           {/* Progress Dots */}
@@ -659,17 +659,17 @@ function App() {
         </div>
 
         {/* Main Question Card */}
-        <div className="relative z-10 px-6 lg:px-12 py-8 flex items-center justify-center min-h-[calc(100vh-200px)]">
-          <div className="w-full max-w-4xl bg-midnight-light/80 backdrop-blur-lg border border-cream/10 rounded-2xl p-8 lg:p-12 shadow-card">
+        <div className="relative z-10 px-4 sm:px-12 py-4 flex items-center justify-center min-h-[calc(100vh-160px)]">
+          <div className="w-full max-w-4xl bg-midnight-light/80 backdrop-blur-lg border border-cream/10 rounded-xl sm:rounded-2xl p-6 sm:p-12 shadow-card">
             {/* Question Number */}
             <div className="flex items-center gap-3 mb-6">
               <span className="font-mono text-sm tracking-[0.12em] text-gold uppercase">
-                Question {currentQuestionIndex + 1} of {currentQuiz.questions.length}
+                ചോദ്യം {currentQuestionIndex + 1} / {currentQuiz.questions.length}
               </span>
             </div>
 
             {/* Question */}
-            <h3 className="font-serif text-2xl lg:text-3xl text-cream mb-8 leading-relaxed">
+            <h3 className="font-serif text-xl sm:text-2xl lg:text-3xl text-cream mb-6 sm:mb-8 leading-relaxed">
               {currentQuestion}
             </h3>
 
@@ -681,47 +681,47 @@ function App() {
                 newAnswers[currentQuestionIndex] = e.target.value
                 setAnswers(newAnswers)
               }}
-              placeholder="Write your answer here..."
+              placeholder="നിങ്ങളുടെ ഉത്തരം ഇവിടെ എഴുതുക..."
               className="min-h-[200px] bg-midnight border-cream/10 text-cream placeholder:text-lavender/50 focus:border-gold focus:ring-gold/20 textarea-glow ambient-glow resize-none"
             />
 
             {/* Word Count */}
             <p className="text-right text-lavender/60 text-sm mt-2">
-              {answers[currentQuestionIndex]?.split(/\s+/).filter(w => w.length > 0).length || 0} words
+              {answers[currentQuestionIndex]?.split(/\s+/).filter(w => w.length > 0).length || 0} വാക്കുകൾ
             </p>
           </div>
         </div>
 
         {/* Bottom Navigation */}
-        <div className="relative z-10 px-6 lg:px-12 py-6 flex justify-between items-center">
+        <div className="relative z-10 px-4 sm:px-12 py-6 flex justify-between items-center bg-midnight/80 backdrop-blur-md border-t border-cream/10">
           <button
             onClick={() => setCurrentQuestionIndex(prev => prev - 1)}
             disabled={isFirstQuestion}
-            className={`flex items-center gap-2 px-6 py-3 rounded-pill transition-all ${isFirstQuestion
+            className={`flex items-center gap-2 px-4 sm:px-6 py-3 rounded-pill transition-all text-sm sm:text-base ${isFirstQuestion
               ? 'text-lavender/30 cursor-not-allowed'
               : 'text-cream hover:text-gold hover:bg-cream/5'
               }`}
           >
-            <ChevronLeft className="w-5 h-5" /> Previous
+            <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" /> മുൻപത്തെ ചോദ്യം
           </button>
 
-          <span className="font-mono text-sm text-lavender hidden sm:block">
-            Question {currentQuestionIndex + 1} of {currentQuiz.questions.length}
+          <span className="font-mono text-[10px] sm:text-sm text-lavender hidden md:block">
+            ചോദ്യം {currentQuestionIndex + 1} / {currentQuiz.questions.length}
           </span>
 
           {isLastQuestion ? (
             <Button
               onClick={submitQuiz}
-              className="btn-gold px-8 py-3 rounded-pill flex items-center gap-2"
+              className="btn-gold px-6 sm:px-8 py-3 rounded-pill flex items-center gap-2 text-sm sm:text-base"
             >
-              Submit Quiz <CheckCircle2 className="w-5 h-5" />
+              സബ്മിറ്റ് ചെയ്യുക <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5" />
             </Button>
           ) : (
             <button
               onClick={() => setCurrentQuestionIndex(prev => prev + 1)}
-              className="flex items-center gap-2 px-6 py-3 rounded-pill bg-gold text-midnight font-medium hover:bg-gold-light transition-all"
+              className="flex items-center gap-2 px-6 sm:px-8 py-3 rounded-pill bg-gold text-midnight font-medium hover:bg-gold-light transition-all text-sm sm:text-base"
             >
-              Next <ChevronRight className="w-5 h-5" />
+              അടുത്തത് <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
           )}
         </div>
@@ -766,37 +766,37 @@ function App() {
           <CheckCircle2 className="w-10 h-10 text-gold" />
         </div>
 
-        <h1 className="font-serif text-4xl lg:text-5xl text-cream mb-6">
-          Your answers have been <span className="text-gold">submitted.</span>
+        <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-cream mb-6">
+          നിങ്ങളുടെ ഉത്തരങ്ങൾ <span className="text-gold">സമർപ്പിച്ചു.</span>
         </h1>
 
-        <p className="text-lavender text-lg leading-relaxed mb-4">
-          Thank you for taking part in Ramadan Reflections, {participantInfo.fullName}.
+        <p className="text-lavender text-base sm:text-lg leading-relaxed mb-4">
+          ഈ ക്വിസ് മത്സരത്തിൽ പങ്കെടുത്തതിന് നന്ദി, {participantInfo.fullName}.
         </p>
 
-        <p className="text-lavender/80 mb-10">
-          May this month bring clarity and growth to your spiritual journey.
+        <p className="text-lavender/80 mb-10 text-sm sm:text-base">
+          ഈ പുണ്യ മാസം നിങ്ങളുടെ ആത്മീയ യാത്രയിൽ വെളിച്ചവും വളർച്ചയും നൽകട്ടെ.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="flex flex-col gap-4 justify-center w-full max-w-sm mx-auto">
           <Button
             onClick={returnHome}
-            className="btn-gold px-8 py-6 rounded-pill"
+            className="btn-gold px-8 py-5 sm:py-6 rounded-pill w-full"
           >
-            Return Home
+            ഹോം പേജിലേക്ക്
           </Button>
           <a
             href="https://chat.whatsapp.com/FDHO2iy5x898gnX3YNx5vj"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-[#25D366] text-white hover:bg-[#128C7E] px-8 py-6 rounded-pill flex items-center justify-center gap-2 font-medium"
+            className="bg-[#25D366] text-white hover:bg-[#128C7E] px-8 py-5 sm:py-6 rounded-pill flex items-center justify-center gap-2 font-medium w-full text-sm sm:text-base"
           >
-            Join WhatsApp Group
+            വാട്സ്ആപ്പ് ഗ്രൂപ്പിൽ ചേരുക
           </a>
         </div>
 
         <p className="font-mono text-xs tracking-[0.12em] text-lavender/50 uppercase mt-12">
-          JazakAllah Khair
+          ജസാക്കല്ലാഹു ഖൈറൻ
         </p>
       </div>
     </div>
